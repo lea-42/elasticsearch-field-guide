@@ -3,7 +3,7 @@
 ## Pipeline
 
 ```
-char filter → tokenizer → token filter
+char filter (O-n) → tokenizer (1) → token filter (0-n)
 ```
 
 ## Test an analyzer
@@ -66,6 +66,60 @@ POST _analyze
   }
 }
 ```
+
+## Extending a built-in analyzer
+
+Elasticsearch has no inheritance — you rebuild the built-in analyzer from its components and add your own filters. Here's the `english` analyzer extended with a custom stopword list and synonym filter:
+
+```json
+PUT my_index
+{
+  "settings": {
+    "analysis": {
+      "filter": {
+        "my_stop": {
+          "type": "stop",
+          "stopwords": ["the", "a", "an", "this", "is"]
+        },
+        "my_synonyms": {
+          "type": "synonym_graph",
+          "synonyms_path": "synonyms.txt",
+          "updateable": true
+        },
+        "english_keywords": {
+          "type": "keyword_marker",
+          "keywords": ["elastic", "kibana"]
+        },
+        "english_stemmer": {
+          "type": "stemmer",
+          "language": "english"
+        },
+        "english_possessive_stemmer": {
+          "type": "stemmer",
+          "language": "possessive_english"
+        }
+      },
+      "analyzer": {
+        "my_english": {
+          "tokenizer": "standard",
+          "filter": [
+            "english_possessive_stemmer",
+            "lowercase",
+            "my_stop",
+            "english_keywords",
+            "english_stemmer",
+            "my_synonyms"
+          ]
+        }
+      }
+    }
+  }
+}
+```
+
+The built-in `english` analyzer uses: possessive stemmer → lowercase → stop → keyword_marker → stemmer. Rebuilding it explicitly gives you control over each step.
+
+> Synonyms must go **after** the stemmer so synonym tokens are in the same form as indexed tokens.
 
 ## Common token filters
 

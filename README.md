@@ -4,7 +4,7 @@ A practical reference for working with Elasticsearch — built to get up to spee
 
 Started as notes from reading [Elasticsearch in Action, Second Edition](https://www.manning.com/books/elasticsearch-in-action-second-edition) (Madhusudhan Konda, Manning), but goes beyond the book to cover topics like dense vector search, kNN, hybrid search, and relevance tuning with `_rank_eval`.
 
-Not a tutorial. Not a copy of the docs. A reference you can actually use.
+Not a tutorial. Not a copy of the docs. A reference whose purpose is to be as useful as possible as fast as possible.
 
 ---
 

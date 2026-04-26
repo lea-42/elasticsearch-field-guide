@@ -1,5 +1,15 @@
 # Full-text search
 
+## match_all
+
+Returns all documents. Score is always 1.0. No body required.
+
+```json
+{ "query": { "match_all": {} } }
+```
+
+---
+
 ## match
 
 Standard full-text query. Analyzes input, scores by BM25.
@@ -16,16 +26,6 @@ Standard full-text query. Analyzes input, scores by BM25.
     "fuzziness": 1
   }
 }
-```
-
----
-
-## match_all
-
-Returns all documents. Score is always 1.0. No body required.
-
-```json
-{ "query": { "match_all": {} } }
 ```
 
 ---
@@ -54,7 +54,7 @@ Like `match_phrase` but last term acts as a prefix. Good for search-as-you-type.
 ```json
 "match_phrase_prefix": {
   "title": {
-    "query":          "elastic sear",
+    "query": "elastic sear",
     "max_expansions": 10
   }
 }
@@ -66,7 +66,7 @@ Like `match_phrase` but last term acts as a prefix. Good for search-as-you-type.
 
 Full Lucene syntax. **Strict — throws a parse error on bad input.** For internal tools / power users only.
 
-- Boolean operators: `AND`, `OR`, `NOT` — **must be uppercase**
+- Boolean operators: `AND`, `OR`, `NOT` (or `&&`, `||`, `!`) — **must be uppercase**; lowercase `and`/`or` are treated as search terms
 - Field targeting: `title:elastic`
 - Boost: `elastic^2`
 - Phrase: `"quick brown"`
@@ -78,8 +78,6 @@ Full Lucene syntax. **Strict — throws a parse error on bad input.** For intern
   "default_field": "title"
 }
 ```
-
-> **Gotcha:** `and` / `or` (lowercase) are treated as search terms, not operators. Always use `AND` / `OR`.
 
 ---
 
