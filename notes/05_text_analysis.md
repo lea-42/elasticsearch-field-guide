@@ -106,9 +106,9 @@ PUT my_index
             "english_possessive_stemmer",
             "lowercase",
             "my_stop",
+            "my_synonyms",
             "english_keywords",
-            "english_stemmer",
-            "my_synonyms"
+            "english_stemmer"
           ]
         }
       }
@@ -119,7 +119,7 @@ PUT my_index
 
 The built-in `english` analyzer uses: possessive stemmer → lowercase → stop → keyword_marker → stemmer. Rebuilding it explicitly gives you control over each step.
 
-> Synonyms must go **after** the stemmer so synonym tokens are in the same form as indexed tokens.
+> Synonyms should go **after** lowercase (so case matches), but **before** the stemmer unless your synonyms file uses already-stemmed root forms.
 
 ## Common token filters
 
