@@ -24,9 +24,12 @@ Not a tutorial. Not a copy of the docs. A reference whose purpose is to be as us
 | [Compound Queries](./notes/09_compound_queries.md) | bool, boosting, function_score, dis_max |
 | [Advanced Search](./notes/10_advanced_search.md) | Percolator, more like this, spans |
 | [Aggregations](./notes/11_aggregations.md) | Metric, bucket, pipeline aggregations |
-| [Performance and Troubleshooting](./notes/12_performance_and_troubleshooting.md) | Profiling, caching, shard sizing, slow logs |
-| [Dense Vector Search](./notes/13_dense_vector_search.md) | kNN, dense_vector, hybrid search |
-| [Evaluation](./notes/14_rank_eval.md) | Relevance evaluation, `_rank_eval` |
+| [Administration](./notes/12_administration.md) | Everything admin |
+| [Performance and Troubleshooting](./notes/13_performance_and_troubleshooting.md) | Profiling, caching, shard sizing, slow logs |
+| [Dense Vector Search](./notes/14_dense_vector_search.md) | kNN, dense_vector, hybrid search |
+| [AI Search](./notes/15_ai_search.md) | Query rewriting with AI |
+| [Evaluation](./notes/16_evaluation.md) | Relevance evaluation, `_rank_eval` |
+| [Misc](./notes/20_misc.md) | misc stuff |
 
 ---
 
