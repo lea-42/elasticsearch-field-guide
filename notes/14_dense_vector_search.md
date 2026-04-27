@@ -55,9 +55,11 @@ PUT /articles
 | `index` | `true` to enable kNN search (builds HNSW graph). `false` = store only |
 | `similarity` | `cosine` for text (magnitude irrelevant). `dot_product` for normalised vectors. `l2_norm` for spatial/image |
  
+
 **Multiple vector fields** — valid, each independent. Storage cost = `dims × 4 bytes × num_docs` per field.
  
 **HNSW index options** (leave at defaults unless tuning):
+(HNSW = Heirarchial Navigable Small World)
 ```json
 "index_options": {
   "type":            "hnsw",
@@ -200,7 +202,7 @@ For small datasets or perfect accuracy requirements:
  
 ## Hybrid search
  
-Combines BM25 (exact terms) with kNN (semantic meaning). Use **RRF** to merge — combines ranks not raw scores, avoiding scale mismatch between BM25 and cosine similarity.
+Combines BM25 (exact terms) with kNN (semantic meaning). Use **RRF (Reciprocal Rank Fusion)** to merge — combines ranks not raw scores, avoiding scale mismatch between BM25 and cosine similarity.
  
 ```python
 def hybrid_search(query: str, k: int = 10) -> list[dict]:
