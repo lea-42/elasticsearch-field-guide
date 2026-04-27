@@ -91,6 +91,7 @@ Set to `-1` during initial bulk load, then restore afterwards.
 
 ### Check 3 — replicas during initial load
 Replicas mean every indexed doc is written N+1 times. Set replicas to 0 during bulk load, restore after:
+(take a snapshot before starting!)
 ```json
 PUT /my_index/_settings
 { "number_of_replicas": 0 }
