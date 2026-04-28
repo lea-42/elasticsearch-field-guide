@@ -60,9 +60,9 @@ Every document falls into one of four buckets:
 ```
                     Retrieved    Not retrieved
                   ┌────────────┬──────────────┐
-    Relevant      │     TP      │      FN      │
+    Relevant      │     TP     │      FN      │
                   ├────────────┼──────────────┤
-    Not relevant  │     FP      │      TN      │
+    Not relevant  │     FP     │      TN      │
                   └────────────┴──────────────┘
 ```
 
@@ -95,7 +95,7 @@ return everything → recall=1.0, precision≈0
 return 1 confident result → precision=1.0, recall=low
 ```
 
-### F1
+### F1 Score
 Harmonic mean — penalises imbalance between precision and recall:
 ```
 F1 = 2 × (Precision × Recall) / (Precision + Recall)

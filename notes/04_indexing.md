@@ -261,3 +261,32 @@ Priority controls the order in which shards are recovered after a cluster restar
 ```
 GET logs-000001/_ilm/explain
 ```
+
+---
+
+## Data Streams
+
+A data stream is a named abstraction over a series of time-based backing indices. Looks like one index from the outside, is many indices under the hood.
+
+**Use for:** logs, metrics, events — any append-only time-series data.
+
+```
+logs  ← data stream (one name you write/search against)
+  ├── .ds-logs-2024-01-000001  (old, read-only)
+  ├── .ds-logs-2024-02-000002  (old, read-only)
+  └── .ds-logs-2024-03-000003  (current write target)
+```
+
+- **Writes** → always go to the current backing index
+- **Reads** → fan out across all backing indices transparently
+- **Rollover** → automatic when current index hits size/age threshold — new backing index created, old one sealed
+- **ILM** → manages hot/warm/cold movement of backing indices automatically
+
+**Append-only** — documents cannot be updated or deleted individually. Use ILM delete phase or `_delete_by_query` for removal.
+
+| | Regular index | Data stream |
+|---|---|---|
+| Write target | Fixed | Always current backing index |
+| Updates | Yes | No |
+| Rollover | Manual | Automatic |
+| Best for | Structured, mutable data | Time-series, append-only |

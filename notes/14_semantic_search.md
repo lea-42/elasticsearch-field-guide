@@ -1,4 +1,4 @@
-# Vector search
+# Semantic Search
  
 ---
  
@@ -307,4 +307,73 @@ Stores vectors as 8-bit integers. ~1-2% recall drop, 4× storage reduction. Wort
 | Too much memory | Lower `m`, `int8_hnsw`, reduce dims |
 | Slow indexing | Bulk API, replicas=0 during load, lower `ef_construction` |
 | Filter recall problems | Raise `num_candidates` |
- 
+
+---
+
+## Semantic search pitfalls
+
+### Vector search pitfalls
+
+**You always get k results, relevant or not**
+kNN returns the k nearest neighbours regardless of how far away they are. There's no notion of "not similar enough" — if you ask for 10 results, you get 10, even if the best match is a terrible one. A very specific query like a product code or a niche technical term will still return k semantically-adjacent results that may be completely wrong.
+
+**Query drift**
+Query drift happens when the semantic side pulls results away from the user's actual intent. Vector search is great at capturing related meaning, but it can over-generalise — "running shoes for flat feet" drifts toward "orthopaedic insoles" or "podiatry guides" because they're close in vector space. Unlike BM25 where you can tune stopwords, synonyms, and boosting with precision, vector space is a black box — you can't easily explain or correct why two things are close.
+
+**Score scale is meaningless across queries**
+Cosine similarity scores are relative within a query, not absolute across queries. A score of 0.85 for one query may be excellent, for another it may be the best of a bad set. You can't use a fixed threshold to filter irrelevant results reliably.
+
+### Hybrid search pitfalls
+
+**RRF hides individual signal quality**
+RRF combines ranks, not scores — a BM25 rank 1 and a kNN rank 1 contribute equally regardless of how confident each signal is. A doc can rank highly in hybrid just by being mediocre in both lists, beating a doc that's excellent in one.
+
+**window_size vs k mismatch**
+If `window_size` is too small relative to the number of candidates from each signal, good results from one list may be cut off before RRF sees them. Default of 100 is usually fine, but with large `k` or multiple kNN fields you may need to raise it.
+
+**Query drift is amplified in hybrid**
+Hybrid search is a compromise — better than either alone on average, but worse than the best single signal on specific query types. Exact navigational queries (product codes, brand + model) are particularly vulnerable: the semantic signal introduces query drift even when BM25 would have returned the right result cleanly.
+
+### Fixes
+
+**Minimum score threshold (vector only)**
+Script score lets you filter by similarity directly — use exact kNN with a `min_score` cutoff to discard results below a similarity floor:
+
+```json
+{
+  "min_score": 0.75,
+  "query": {
+    "script_score": {
+      "query": { "match_all": {} },
+      "script": {
+        "source": "cosineSimilarity(params.query_vector, 'embedding') + 1.0",
+        "params": { "query_vector": [...] }
+      }
+    }
+  }
+}
+```
+
+Note: `min_score` isn't available on the `knn` block — only on `query`.
+
+**Cross-encoder reranking**
+The most effective fix for both problems. Retrieve a large candidate set cheaply (hybrid, k=100), then rerank with a cross-encoder that jointly encodes query + document and produces a proper relevance score. Unlike cosine similarity, cross-encoder scores are comparable across queries and can be thresholded.
+
+```
+hybrid kNN+BM25 → 100 candidates → cross-encoder → top 10
+```
+
+See chapter 15 for implementation.
+
+**Route by query type**
+Use intent classification (chapter 15) to pick the right retrieval strategy per query rather than always running hybrid:
+
+| Query type | Strategy |
+|---|---|
+| Exact / navigational | BM25 only — semantic adds noise |
+| Vague / conceptual | kNN or HyDE |
+| General | Hybrid + RRF |
+
+**Raise `num_candidates` with selective filters**
+When combining kNN with filters, a selective filter (e.g. a rare category) can starve the graph traversal of reachable nodes. Raise `num_candidates` to compensate, or consider post-filtering on a larger unfiltered kNN result.
+

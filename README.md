@@ -12,8 +12,7 @@ Not a tutorial. Not a copy of the docs. A reference whose purpose is to be as us
 
 | Chapter | Topic |
 |---|---|
-| [Local Setup](./notes/00_local_setup.md) | Docker images, removing security, common commands |
-| [Architecture](./notes/01_architecture.md) | Clusters, nodes, shards, segments, heap |
+| [Introduction](./notes/00_introduction.md) | Clusters, nodes, shards, segments, heap, local setup |
 | [Mappings](./notes/02_mappings.md) | Field types, mapping rules, normalizers, nested |
 | [Documents](./notes/03_documents.md) | CRUD, update by query, bulk, reindex |
 | [Indexing](./notes/04_indexing.md) | Index operations, templates, ILM, shrink/split/rollover |
@@ -22,14 +21,13 @@ Not a tutorial. Not a copy of the docs. A reference whose purpose is to be as us
 | [Term Level Search](./notes/07_term_level_search.md) | term, terms, range, fuzzy, wildcard, prefix |
 | [Full Text Search](./notes/08_full_text_search.md) | match, match_phrase, multi_match, query_string |
 | [Compound Queries](./notes/09_compound_queries.md) | bool, boosting, function_score, dis_max |
-| [Advanced Search](./notes/10_advanced_search.md) | Percolator, more like this, spans |
+| [Advanced Search](./notes/10_advanced_search.md) | Geo, distance_feature, spans, percolator, multilingual |
 | [Aggregations](./notes/11_aggregations.md) | Metric, bucket, pipeline aggregations |
-| [Administration](./notes/12_administration.md) | Everything admin |
+| [Administration](./notes/12_administration.md) | Storage layers, heap, bloom filters, tiers, snapshots, cluster ops |
 | [Performance and Troubleshooting](./notes/13_performance_and_troubleshooting.md) | Profiling, caching, shard sizing, slow logs |
-| [Dense Vector Search](./notes/14_dense_vector_search.md) | kNN, dense_vector, hybrid search |
+| [Semantic Search](./notes/14_semantic_search.md) | kNN, dense_vector, hybrid search, query drift |
 | [AI Search](./notes/15_ai_search.md) | Query rewriting with AI |
 | [Evaluation](./notes/16_evaluation.md) | Relevance evaluation, `_rank_eval` |
-| [Misc](./notes/20_misc.md) | misc stuff |
 
 ---
 
