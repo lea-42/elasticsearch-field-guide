@@ -15,19 +15,19 @@ Not a tutorial. Not a copy of the docs. A reference whose purpose is to be as us
 | [Introduction](./notes/00_introduction.md) | Clusters, nodes, shards, segments, heap, local setup |
 | [Mappings](./notes/02_mappings.md) | Field types, mapping rules, normalizers, nested |
 | [Documents](./notes/03_documents.md) | CRUD, update by query, bulk, reindex |
-| [Indexing](./notes/04_indexing.md) | Index operations, templates, ILM, shrink/split/rollover |
+| [Indexing](./notes/04_indexing.md) | Index operations, templates, ILM, shrink/split/rollover, data streams |
 | [Text Analysis](./notes/05_text_analysis.md) | Analyzers, token filters, synonyms, autocomplete |
 | [Intro to Search](./notes/06_intro_to_search.md) | Query vs filter, bool, pagination, sorting, highlighting |
 | [Term Level Search](./notes/07_term_level_search.md) | term, terms, range, fuzzy, wildcard, prefix |
 | [Full Text Search](./notes/08_full_text_search.md) | match, match_phrase, multi_match, query_string |
-| [Compound Queries](./notes/09_compound_queries.md) | bool, boosting, function_score, dis_max |
+| [Compound Queries](./notes/09_compound_queries.md) | bool, boosting, function_score, dis_max, constant_score |
 | [Advanced Search](./notes/10_advanced_search.md) | Geo, distance_feature, spans, percolator, multilingual |
 | [Aggregations](./notes/11_aggregations.md) | Metric, bucket, pipeline aggregations |
 | [Administration](./notes/12_administration.md) | Storage layers, heap, bloom filters, tiers, snapshots, cluster ops |
-| [Performance and Troubleshooting](./notes/13_performance_and_troubleshooting.md) | Profiling, caching, shard sizing, slow logs |
+| [Performance and Troubleshooting](./notes/13_performance_and_troubleshooting.md) | Slow queries, slow indexing, circuit breakers, cluster stability |
 | [Semantic Search](./notes/14_semantic_search.md) | kNN, dense_vector, hybrid search, query drift |
-| [AI Search](./notes/15_ai_search.md) | Query rewriting with AI |
-| [Evaluation](./notes/16_evaluation.md) | Relevance evaluation, `_rank_eval` |
+| [AI Search](./notes/15_ai_search.md) | Query understanding, HyDE, reranking, RAG, LTR |
+| [Evaluation](./notes/16_evaluation.md) | Precision, recall, MAP, NDCG, MRR, `_rank_eval` |
 
 ---
 
